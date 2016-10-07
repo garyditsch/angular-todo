@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html ng-app="app" data-framework="firebase">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Angular To Do</title>
+
+    <!-- MDN Bootstrap CSS -->  
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <script src="https://use.fontawesome.com/a04d9e4c1c.js"></script>
+
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+
+   
+</head>
+<body ng-cloak ng-controller="TodoController as todoCtrl">
+<!-- Start of Body -->
+
+<!--Navbar-->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Angular To Do Example</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="#">Link </a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Link</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<!-- End Navbar-->
+
+<!-- Start Main Container -->
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-6 ">
+
+          <!-- Add and Edit Buttons -->
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="btn-group btn-block" role="group">
+                  <button type="button" class="btn btn-default btn-block" ng-click="todoCtrl.showTaskForm()">Add Task</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Form -->
+          <div class="panel panel-default" ng-show="todoCtrl.showingForm">
+              <div class="panel-heading">
+                <h3 class="panel-title">Add Task</h3>
+              </div>
+              <div class="panel-body">
+                <div class="form-group" ng-submit="todoCtrl.addNewTask()">
+                   <label for="Task">Task</label>
+                   <input type="text" ng-model="todoCtrl.taskForm.task" class="form-control">
+
+                   <label for="Date">Date</label>
+                   <input type="date" ng-model="todoCtrl.taskForm.date" class="form-control" placeholder="yyyy-MM-dd">
+                </div>
+                <!-- Display this save button with Add Contact -->
+                <button type="button" class="btn btn-default btn-block" ng-click="todoCtrl.addNewTask()"
+                ng-show="todoCtrl.showingSaveNewContactButton">Save Contact</button>
+
+                <!-- Display this save button with the Edit Contact -->
+                <!-- <button type="button" class="btn btn-default" ng-click="resetContactForm()"
+                ng-show="showingSaveEditContactButton">Save Contact</button> -->
+              </div>
+          </div>
+
+        </div> <!-- End first column -->
+
+        <div class="col-md-6 ">
+
+          <!-- Display for list of all contacts by name -->
+          <div class="panel panel-default contact-list">
+              <div class="panel-heading">
+                  <h3 class="panel-title">Task List</h3>
+              </div>
+          
+              <table class="table table-striped">
+                  
+              </table>
+          </div>
+
+        </div> <!-- End second column -->
+
+    </div> <!-- End main row -->
+</div> <!-- End Main Container --> 
+
+<pre><div>{{todoCtrl.taskList}}</div></pre>
+
+<footer class="page-footer">
+  <nav class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container">
+          &copy; <a href="https://garyditsch.github.io">Gary Ditsch</a> |
+          | <a href="http://awesomeincu.com/blog">Awesome Inc U. Bootcamp 2016</a>
+      </div>
+  </nav>
+</footer>
+
+
+    <!-- Bootstrap Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- Angular-1 JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+
+    <!-- Firebase JS -->
+
+    <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase-app.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase-auth.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase-database.js"></script>
+
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyCY93KR7UPLJXg-Qb-mn4c4KrohOONS0Hw",
+        authDomain: "angular-todo-b0f08.firebaseapp.com",
+        databaseURL: "https://angular-todo-b0f08.firebaseio.com",
+        storageBucket: "angular-todo-b0f08.appspot.com",
+        messagingSenderId: "862222796811"
+      };
+      firebase.initializeApp(config);
+    </script>
+
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/0.9.0/angularfire.min.js"></script>
+
+    <!-- Our Javascript -->
+    <script src="app.js"></script>
+
+</body>
+</html>
