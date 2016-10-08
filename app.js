@@ -1,22 +1,25 @@
 'use strict';
 
 // Define Angular module and controller.
-angular.module('app', ['firebase'])
-    .controller('TodoController', TodoController);
+
+angular.module('app', [])
+    .controller('TodoController', TodoController)
 
 function TodoController() {
     const ctrl = this;
-    var url = "angular-todo-b0f08.firebaseio.com"
-    // angularFire(url, ctrl, "tasks").then(function() {  
+        
 
     ctrl.taskList = [];
-    ctrl.showingForm = false;
+    // ctrl.taskComplete = false;
+    ctrl.showingForm = true;
     ctrl.showingSaveNewContactButton = true;
    
     // Define input values, and reset function.
     ctrl.taskForm = {
         task: '',
-        date: '',
+        dateAdded: '',
+        dateDue:'',
+        completed:'',
     };
 
 
@@ -25,9 +28,22 @@ function TodoController() {
         ctrl.showingForm = true;
     }
 
-    ctrl.showingSaveNewContactButton = function() {
-        ctrl.addNewTask()
+    ctrl.clearForm = function() {
+        ctrl.taskForm = {
+            task: '',
+            dateAdded: '',
+            dateDue:'',
+        }
     }
+
+
+    ctrl.completeTask = function() {
+        ctrl.taskComplete = true;
+    };
+
+    // ctrl.showingSaveNewContactButton = function() {
+    //     ctrl.addNewTask()
+    // };
 
     // Add a new task to taskList on new form input.
     ctrl.addNewTask = function() {
@@ -37,15 +53,15 @@ function TodoController() {
         // else {
             var task = {
                 task:ctrl.taskForm.task,
-                date:ctrl.taskForm.date,
+                dateAdded:ctrl.taskForm.dateAdded,
+                dateDue:ctrl.taskForm.dateDue,
+                completed:ctrl.taskComplete=false,
             };
 
             ctrl.taskList.push(task);
+            ctrl.clearForm()
 
-            ctrl.showingForm = false;
         // }
     };
 
-// }); // response to line 12 in tutorial, to make 'promises' resolve prior to functions
-
-} // end TodoController
+}; // end TodoController

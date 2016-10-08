@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app" data-framework="firebase">
+<html ng-app="app">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Angular To Do</title>
@@ -12,6 +12,25 @@
 
     <!-- Custom stylesheet -->
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Angular-1 JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+
+    <!-- Firebase JS -->
+    <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase-app.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase-auth.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase-database.js"></script>
+
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/0.9.0/angularfire.min.js"></script>
+
+    <!-- JQuery -->
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+    <!-- Our Javascript -->
+    <script src="app.js"></script>
 
    
 </head>
@@ -44,16 +63,16 @@
 <div class="container">
     <div class="row">
 
-        <div class="col-md-6 ">
+        <div class="col-md-4 ">
 
           <!-- Add and Edit Buttons -->
-          <div class="panel panel-default">
+          <!-- <div class="panel panel-default">
             <div class="panel-body">
               <div class="btn-group btn-block" role="group">
                   <button type="button" class="btn btn-default btn-block" ng-click="todoCtrl.showTaskForm()">Add Task</button>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <!-- Contact Form -->
           <div class="panel panel-default" ng-show="todoCtrl.showingForm">
@@ -65,12 +84,18 @@
                    <label for="Task">Task</label>
                    <input type="text" ng-model="todoCtrl.taskForm.task" class="form-control">
 
-                   <label for="Date">Date</label>
-                   <input type="date" ng-model="todoCtrl.taskForm.date" class="form-control" placeholder="yyyy-MM-dd">
+                   <label for="Date">Date Added</label>
+                   <input type="date" ng-model="todoCtrl.taskForm.dateAdded" class="form-control" placeholder="yyyy-MM-dd">
+
+                   <label for="Date">Date Due</label>
+                   <input type="date" ng-model="todoCtrl.taskForm.dateDue" class="form-control" placeholder="yyyy-MM-dd">
+
+                   <!-- <label for="Date">Completed</label>
+                   <input type="text" ng-model="todoCtrl.taskForm.completed" class="form-control"> -->
                 </div>
                 <!-- Display this save button with Add Contact -->
                 <button type="button" class="btn btn-default btn-block" ng-click="todoCtrl.addNewTask()"
-                ng-show="todoCtrl.showingSaveNewContactButton">Save Contact</button>
+                ng-show="todoCtrl.showingSaveNewContactButton">Save Task</button>
 
                 <!-- Display this save button with the Edit Contact -->
                 <!-- <button type="button" class="btn btn-default" ng-click="resetContactForm()"
@@ -80,16 +105,34 @@
 
         </div> <!-- End first column -->
 
-        <div class="col-md-6 ">
+        <div class="col-md-8 ">
 
           <!-- Display for list of all contacts by name -->
-          <div class="panel panel-default contact-list">
+          <div class="panel panel-default">
               <div class="panel-heading">
-                  <h3 class="panel-title">Task List</h3>
+                  <h3 class="panel-title">
+                    Things to get done...
+                  </h3>
               </div>
-          
+    
               <table class="table table-striped">
-                  
+                <tr>
+                  <th class="col-md-6">To Do</th>
+                  <th class="col-md-2">Date Added</th>
+                  <th class="col-md-2">Date Due</th>
+                  <th class="col-md-2">Completed</th>
+                </tr>
+                <tr ng-repeat="task in todoCtrl.taskList">
+                      <td class="col-md-6">{{task.task}}</td>
+                      <td class="col-md-2">{{task.dateAdded | date : mm/dd/yyyy}}</td>
+                      <td class="col-md-2">{{task.dateDue | date : mm/dd/yyyy}}</td>
+
+                      <td class="col-md-2" ng-class="{ success: todoCtrl.taskComplete }">
+                      <button type="button" class="btn btn-default btn-block" ng-click="todoCtrl.completeTask(task)">complete</button>
+                      </td>
+
+                      <!-- <td class="col-md-2"><input type="checkbox" ng-model="todoCtrl.completed" class="form-control"></td> -->
+                </tr>
               </table>
           </div>
 
@@ -98,7 +141,9 @@
     </div> <!-- End main row -->
 </div> <!-- End Main Container --> 
 
-<pre><div>{{todoCtrl.taskList}}</div></pre>
+<pre><div>{{todoCtrl.taskList|json}}</div></pre>
+
+<pre>{{ todoCtrl.object | json }}</pre>
 
 <footer class="page-footer">
   <nav class="navbar navbar-default navbar-fixed-bottom">
@@ -112,34 +157,6 @@
 
     <!-- Bootstrap Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-    <!-- Angular-1 JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
-
-    <!-- Firebase JS -->
-
-    <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase-app.js"></script>
-    <!-- <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase-auth.js"></script> -->
-    <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase-database.js"></script>
-
-    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyCY93KR7UPLJXg-Qb-mn4c4KrohOONS0Hw",
-        authDomain: "angular-todo-b0f08.firebaseapp.com",
-        databaseURL: "https://angular-todo-b0f08.firebaseio.com",
-        storageBucket: "angular-todo-b0f08.appspot.com",
-        messagingSenderId: "862222796811"
-      };
-      firebase.initializeApp(config);
-    </script>
-
-    <!-- AngularFire -->
-    <script src="https://cdn.firebase.com/libs/angularfire/0.9.0/angularfire.min.js"></script>
-
-    <!-- Our Javascript -->
-    <script src="app.js"></script>
 
 </body>
 </html>
