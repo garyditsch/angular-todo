@@ -12,14 +12,13 @@ function TodoController() {
     ctrl.taskList = [];
     // ctrl.taskComplete = false;
     ctrl.showingForm = true;
-    ctrl.showingSaveNewContactButton = true;
+    ctrl.showingSaveNewTaskButton = true;
    
     // Define input values, and reset function.
-    ctrl.taskForm = {
+    ctrl.taskModel = {
         task: '',
         dateAdded: '',
         dateDue:'',
-        completed:'',
     };
 
 
@@ -29,7 +28,7 @@ function TodoController() {
     }
 
     ctrl.clearForm = function() {
-        ctrl.taskForm = {
+        ctrl.taskModel = {
             task: '',
             dateAdded: '',
             dateDue:'',
@@ -37,8 +36,12 @@ function TodoController() {
     }
 
 
-    ctrl.completeTask = function() {
-        ctrl.taskComplete = true;
+    ctrl.completeTask = function(index) {
+        ctrl.taskList[index].completed = true;
+    };
+
+    ctrl.uncompleteTask = function(index) {
+        ctrl.taskList[index].completed = false;
     };
 
     // ctrl.showingSaveNewContactButton = function() {
@@ -52,10 +55,10 @@ function TodoController() {
         // }
         // else {
             var task = {
-                task:ctrl.taskForm.task,
-                dateAdded:ctrl.taskForm.dateAdded,
-                dateDue:ctrl.taskForm.dateDue,
-                completed:ctrl.taskComplete=false,
+                task:ctrl.taskModel.task,
+                dateAdded:ctrl.taskModel.dateAdded,
+                dateDue:ctrl.taskModel.dateDue,
+                completed:ctrl.completed = false,
             };
 
             ctrl.taskList.push(task);

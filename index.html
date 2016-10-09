@@ -82,20 +82,20 @@
               <div class="panel-body">
                 <div class="form-group" ng-submit="todoCtrl.addNewTask()">
                    <label for="Task">Task</label>
-                   <input type="text" ng-model="todoCtrl.taskForm.task" class="form-control">
+                   <input type="text" ng-model="todoCtrl.taskModel.task" class="form-control">
 
                    <label for="Date">Date Added</label>
-                   <input type="date" ng-model="todoCtrl.taskForm.dateAdded" class="form-control" placeholder="yyyy-MM-dd">
+                   <input type="date" ng-model="todoCtrl.taskModel.dateAdded" class="form-control" placeholder="yyyy-MM-dd">
 
                    <label for="Date">Date Due</label>
-                   <input type="date" ng-model="todoCtrl.taskForm.dateDue" class="form-control" placeholder="yyyy-MM-dd">
+                   <input type="date" ng-model="todoCtrl.taskModel.dateDue" class="form-control" placeholder="yyyy-MM-dd">
 
                    <!-- <label for="Date">Completed</label>
-                   <input type="text" ng-model="todoCtrl.taskForm.completed" class="form-control"> -->
+                   <input type="text" ng-model="todoCtrl.taskModel.completed" class="form-control"> -->
                 </div>
                 <!-- Display this save button with Add Contact -->
                 <button type="button" class="btn btn-default btn-block" ng-click="todoCtrl.addNewTask()"
-                ng-show="todoCtrl.showingSaveNewContactButton">Save Task</button>
+                ng-show="todoCtrl.showingSaveNewTaskButton">Save Task</button>
 
                 <!-- Display this save button with the Edit Contact -->
                 <!-- <button type="button" class="btn btn-default" ng-click="resetContactForm()"
@@ -107,7 +107,7 @@
 
         <div class="col-md-8 ">
 
-          <!-- Display for list of all contacts by name -->
+          <!-- Display for list of all taks -->
           <div class="panel panel-default">
               <div class="panel-heading">
                   <h3 class="panel-title">
@@ -117,19 +117,31 @@
     
               <table class="table table-striped">
                 <tr>
-                  <th class="col-md-6">To Do</th>
+                  <th class="col-md-2">Index</th>
+                  <th class="col-md-4">To Do</th>
                   <th class="col-md-2">Date Added</th>
                   <th class="col-md-2">Date Due</th>
-                  <th class="col-md-2">Completed</th>
+                  <th class="col-md-1"></th>
+                  <th class="col-md-1"></th>
                 </tr>
-                <tr ng-repeat="task in todoCtrl.taskList">
-                      <td class="col-md-6">{{task.task}}</td>
-                      <td class="col-md-2">{{task.dateAdded | date : mm/dd/yyyy}}</td>
+                 <tr>
+                  <th class="col-md-2"></th>
+                  <th class="col-md-4"></th>
+                  <th class="col-md-2"><div ng-click=""[ sort ]</th>
+                  <th class="col-md-2"></th>
+                  <th class="col-md-1"></th>
+                  <th class="col-md-1"></th>
+                </tr>
+                <tr ng-repeat="task in todoCtrl.taskList" ng-class="{ success: task.completed}">
+                      <td class="col-md-2">{{$index}}</td>
+                      <td class="col-md-4">{{task.task}}</td>
+                      <td class="col-md-2">{{task.dateAdded | date : mm/dd/yyyy}}
+                      </td>
                       <td class="col-md-2">{{task.dateDue | date : mm/dd/yyyy}}</td>
 
-                      <td class="col-md-2" ng-class="{ success: todoCtrl.taskComplete }">
-                      <button type="button" class="btn btn-default btn-block" ng-click="todoCtrl.completeTask(task)">complete</button>
-                      </td>
+                      <td class="col-md-1">
+                      <i class="fa fa-square-o" aria-hidden="true" ng-click="todoCtrl.completeTask($index)"></i></td>
+                      <td class="col-md-1"><i class="fa fa-trash-o" aria-hidden="true"></i></td>
 
                       <!-- <td class="col-md-2"><input type="checkbox" ng-model="todoCtrl.completed" class="form-control"></td> -->
                 </tr>
