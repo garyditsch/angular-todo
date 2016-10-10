@@ -110,38 +110,44 @@
           <!-- Display for list of all taks -->
           <div class="panel panel-default">
               <div class="panel-heading">
-                  <h3 class="panel-title">
                     Things to get done...
-                  </h3>
               </div>
     
               <table class="table table-striped">
                 <tr>
                   <th class="col-md-1"></th>
-                  <th class="col-md-5">To Do</th>
+                  <th class="col-md-4">To Do</th>
                   <th class="col-md-2">Date Added</th>
                   <th class="col-md-2">Date Due</th>
                   <th class="col-md-1"></th>
                   <th class="col-md-1"></th>
+                  <th class="col-md-1"></th>
                 </tr>
                  <tr>
-                  <th class="col-md-2"></th>
+                  <th class="col-md-1"></th>
                   <th class="col-md-4"></th>
-                  <th class="col-md-2"><div ng-click=""[ sort ]</th>
                   <th class="col-md-2"></th>
+                  <th class="col-md-2"></th>
+                  <th class="col-md-1">
+                    <button ng-show="!todoCtrl.completeFilterStatus" ng-click="todoCtrl.completeFilterStatusButton()">xxx</button>
+                    <button ng-show="todoCtrl.completeFilterStatus" ng-click="todoCtrl.allFilterStatusButton()">ooo</button>
+                  </th>
                   <th class="col-md-1"></th>
                   <th class="col-md-1"></th>
                 </tr>
-                <tr ng-repeat="task in todoCtrl.taskList" ng-class="{ success: task.completed}">
-                      <td class="col-md-2">{{$index + 1}} |</td>
+                <tr ng-repeat="task in todoCtrl.getFilteredByComplete()" ng-class="{ success: task.completed}">
+                      <td class="col-md-1">{{$index + 1}} |</td>
                       <td class="col-md-4">{{task.task}}</td>
                       <td class="col-md-2">{{task.dateAdded | date : mm/dd/yyyy}}
                       </td>
                       <td class="col-md-2">{{task.dateDue | date : mm/dd/yyyy}}</td>
 
                       <td class="col-md-1">
-                          <i class="fa fa-square-o" aria-hidden="true" ng-show="!task.completed" ng-click="todoCtrl.completeTask($index)"></i>
-                          <i class="fa fa-check-square-o" aria-hidden="true" ng-show="task.completed" ng-click="todoCtrl.uncompleteTask($index)"></i>
+                          <i class="fa fa-square-o" aria-hidden="true" ng-show="!task.completed" ng-click="todoCtrl.completeTask(task)"></i>
+                          <i class="fa fa-check-square-o" aria-hidden="true" ng-show="task.completed" ng-click="todoCtrl.uncompleteTask(task)"></i>
+                      </td>
+                      <td class="col-md-1">
+                         <i class="fa fa-pencil-square-o" aria-hidden="true" ng-click="todoCtrl.editTask($index)"></i>
                       </td>
                       <td class="col-md-1">
                           <i class="fa fa-trash-o" aria-hidden="true" ng-click="todoCtrl.deleteTask($index)"></i>
