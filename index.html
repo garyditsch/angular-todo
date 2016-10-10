@@ -117,8 +117,8 @@
     
               <table class="table table-striped">
                 <tr>
-                  <th class="col-md-2">Index</th>
-                  <th class="col-md-4">To Do</th>
+                  <th class="col-md-1"></th>
+                  <th class="col-md-5">To Do</th>
                   <th class="col-md-2">Date Added</th>
                   <th class="col-md-2">Date Due</th>
                   <th class="col-md-1"></th>
@@ -133,15 +133,19 @@
                   <th class="col-md-1"></th>
                 </tr>
                 <tr ng-repeat="task in todoCtrl.taskList" ng-class="{ success: task.completed}">
-                      <td class="col-md-2">{{$index}}</td>
+                      <td class="col-md-2">{{$index + 1}} |</td>
                       <td class="col-md-4">{{task.task}}</td>
                       <td class="col-md-2">{{task.dateAdded | date : mm/dd/yyyy}}
                       </td>
                       <td class="col-md-2">{{task.dateDue | date : mm/dd/yyyy}}</td>
 
                       <td class="col-md-1">
-                      <i class="fa fa-square-o" aria-hidden="true" ng-click="todoCtrl.completeTask($index)"></i></td>
-                      <td class="col-md-1"><i class="fa fa-trash-o" aria-hidden="true"></i></td>
+                          <i class="fa fa-square-o" aria-hidden="true" ng-show="!task.completed" ng-click="todoCtrl.completeTask($index)"></i>
+                          <i class="fa fa-check-square-o" aria-hidden="true" ng-show="task.completed" ng-click="todoCtrl.uncompleteTask($index)"></i>
+                      </td>
+                      <td class="col-md-1">
+                          <i class="fa fa-trash-o" aria-hidden="true" ng-click="todoCtrl.deleteTask($index)"></i>
+                      </td>
 
                       <!-- <td class="col-md-2"><input type="checkbox" ng-model="todoCtrl.completed" class="form-control"></td> -->
                 </tr>

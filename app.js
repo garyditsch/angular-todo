@@ -10,7 +10,6 @@ function TodoController() {
         
 
     ctrl.taskList = [];
-    // ctrl.taskComplete = false;
     ctrl.showingForm = true;
     ctrl.showingSaveNewTaskButton = true;
    
@@ -35,36 +34,33 @@ function TodoController() {
         }
     }
 
-
+    // This function allows user to complete task
     ctrl.completeTask = function(index) {
         ctrl.taskList[index].completed = true;
     };
 
+    // this function allow user to uncomplete task
     ctrl.uncompleteTask = function(index) {
         ctrl.taskList[index].completed = false;
     };
 
-    // ctrl.showingSaveNewContactButton = function() {
-    //     ctrl.addNewTask()
-    // };
+    // this function allows user to delete task
+    ctrl.deleteTask = function(index) { 
+        ctrl.taskList.splice(index, 1);     
+    }
+
 
     // Add a new task to taskList on new form input.
     ctrl.addNewTask = function() {
-        // if (!ctrl.taskForm.task) {
-        //     return false;
-        // }
-        // else {
-            var task = {
-                task:ctrl.taskModel.task,
-                dateAdded:ctrl.taskModel.dateAdded,
-                dateDue:ctrl.taskModel.dateDue,
-                completed:ctrl.completed = false,
-            };
+        var task = {
+            task:ctrl.taskModel.task,
+            dateAdded:ctrl.taskModel.dateAdded,
+            dateDue:ctrl.taskModel.dateDue,
+            completed:ctrl.completed = false,
+        };
 
-            ctrl.taskList.push(task);
-            ctrl.clearForm()
-
-        // }
+        ctrl.taskList.push(task);
+        ctrl.clearForm()
     };
 
 }; // end TodoController
