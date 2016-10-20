@@ -11,13 +11,15 @@ function TodoController() {
         
     ctrl.taskList = [];
     ctrl.showingForm = true;
-    ctrl.showingSaveNewTaskButton = true;
     ctrl.completeFilterStatus = false;
-   
+    ctrl.addedSortStatus = true;
+    ctrl.editSaveButton = false;
+    ctrl.showingSaveNewTaskButton = true;
+    
+
     // Define input values, and reset function.
     ctrl.taskModel = {
         task: '',
-        dateAdded: '',
         dateDue:'',
     };
 
@@ -30,9 +32,11 @@ function TodoController() {
     ctrl.clearForm = function() {
         ctrl.taskModel = {
             task: '',
-            dateAdded: '',
             dateDue:'',
-        }
+        };
+        ctrl.showingSaveNewTaskButton = true;
+        ctrl.editSaveButton = false;
+
     }
 
     // This function allows user to complete task
@@ -48,17 +52,20 @@ function TodoController() {
     };
 
     // this function allows user to delete task
-    ctrl.deleteTask = function(index) { 
+    ctrl.deleteTask = function(task) { 
+        var index = ctrl.taskList.indexOf(task)
         ctrl.taskList.splice(index, 1);     
     }
 
 
     // this function populate form with task data so user can edit
-    ctrl.editTask = function(index) {
-        ctrl.taskModel = {
-            task: ctrl.taskList[index].task,
-        }
+    ctrl.editTask = function(task) {
+        var index = ctrl.taskList.indexOf(task)
+        ctrl.taskModel = ctrl.taskList[index];
+        ctrl.editSaveButton = true;
+        ctrl.showingSaveNewTaskButton = false;
     };
+
 
     // this function will return the array of all or filtered by complete status
     ctrl.getFilteredByComplete = function() {
@@ -85,11 +92,24 @@ function TodoController() {
         ctrl.completeFilterStatus = false;
     }
 
+    // toggle for sorting by date added
+    ctrl.addedDecending = function() {
+        ctrl.addedSortStatus = true;
+    }
+
+    ctrl.addedAscending = function() {
+        ctrl.addedSortStatus = false;
+    }
+
+    ctrl.getDateAdded = function() {
+        return ctrl.dateAdded = new Date();
+    }
+
     // Add a new task to taskList on new form input.
     ctrl.addNewTask = function() {
         var task = {
             task:ctrl.taskModel.task,
-            dateAdded:ctrl.taskModel.dateAdded,
+            dateAdded:ctrl.getDateAdded(),
             dateDue:ctrl.taskModel.dateDue,
             completed:ctrl.completed = false,
         };

@@ -4,9 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Angular To Do</title>
 
-    <!-- MDN Bootstrap CSS -->  
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/slate/bootstrap.min.css">
 
     <script src="https://use.fontawesome.com/a04d9e4c1c.js"></script>
 
@@ -48,10 +46,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="#">Link </a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -63,51 +59,28 @@
 <div class="container">
     <div class="row">
 
-        <div class="col-md-4 ">
-
-          <!-- Add and Edit Buttons -->
-          <!-- <div class="panel panel-default">
-            <div class="panel-body">
-              <div class="btn-group btn-block" role="group">
-                  <button type="button" class="btn btn-default btn-block" ng-click="todoCtrl.showTaskForm()">Add Task</button>
-              </div>
-            </div>
-          </div> -->
-
-          <!-- Contact Form -->
-          <div class="panel panel-default" ng-show="todoCtrl.showingForm">
-              <div class="panel-heading">
-                <h3 class="panel-title">Add Task</h3>
-              </div>
-              <div class="panel-body">
-                <div class="form-group" ng-submit="todoCtrl.addNewTask()">
-                   <label for="Task">Task</label>
-                   <input type="text" ng-model="todoCtrl.taskModel.task" class="form-control">
-
-                   <label for="Date">Date Added</label>
-                   <input type="date" ng-model="todoCtrl.taskModel.dateAdded" class="form-control" placeholder="yyyy-MM-dd">
-
-                   <label for="Date">Date Due</label>
-                   <input type="date" ng-model="todoCtrl.taskModel.dateDue" class="form-control" placeholder="yyyy-MM-dd">
-
-                   <!-- <label for="Date">Completed</label>
-                   <input type="text" ng-model="todoCtrl.taskModel.completed" class="form-control"> -->
-                </div>
-                <!-- Display this save button with Add Contact -->
-                <button type="button" class="btn btn-default btn-block" ng-click="todoCtrl.addNewTask()"
-                ng-show="todoCtrl.showingSaveNewTaskButton">Save Task</button>
-
-                <!-- Display this save button with the Edit Contact -->
-                <!-- <button type="button" class="btn btn-default" ng-click="resetContactForm()"
-                ng-show="showingSaveEditContactButton">Save Contact</button> -->
-              </div>
-          </div>
-
-        </div> <!-- End first column -->
-
-        <div class="col-md-8 ">
+        <div class="col-md-8 col-md-offset-2">
 
           <!-- Display for list of all taks -->
+          <div class="panel panel-default">
+              <table class="table table-striped">
+                <tr>
+                  <th class="col-md-4">New Task</th>
+                  <th class="col-md-4">Due Date</th>
+                  <th class="col-md-4"></th>
+                </tr>
+                <tr>
+                  <td class="col-md-4"><input type="text" placeholder="Add new task"ng-model="todoCtrl.taskModel.task" class="form-control"></td>
+                  <td class="col-md-4"><input type="date" placeholder=Due Date" ng-model="todoCtrl.taskModel.dateDue" class="form-control" placeholder="yyyy-MM-dd"></td>
+                  <td class="col-md-4">
+                      <button type="button" class="btn btn-default btn-block" ng-click="todoCtrl.addNewTask()"
+                ng-show="todoCtrl.showingSaveNewTaskButton">Save Task</button><button type="button" class="btn btn-default btn-block" ng-click="todoCtrl.clearForm()"
+                ng-show="todoCtrl.editSaveButton">Save Edit</button>
+                  </td>
+                </tr>
+              </table>
+          </div>
+
           <div class="panel panel-default">
               <div class="panel-heading">
                     Things to get done...
@@ -117,26 +90,31 @@
                 <tr>
                   <th class="col-md-1"></th>
                   <th class="col-md-4">To Do</th>
-                  <th class="col-md-2">Date Added</th>
-                  <th class="col-md-2">Date Due</th>
-                  <th class="col-md-1"></th>
-                  <th class="col-md-1"></th>
-                  <th class="col-md-1"></th>
+                  <th class="col-md-2">Added</th>
+                  <th class="col-md-2">Due</th>
+                  <th class="col-md-1">Done</th>
+                  <th class="col-md-1">Edit</th>
+                  <th class="col-md-1">Delete</th>
                 </tr>
                  <tr>
                   <th class="col-md-1"></th>
                   <th class="col-md-4"></th>
-                  <th class="col-md-2"></th>
+                  <th class="col-md-2">
+                    <!-- <i class="fa fa-toggle-on" aria-hidden="true" style="font-size:24px" ng-show="todoCtrl.addedSortStatus" ng-click="todoCtrl.addedAcending()"></i>
+
+                    <i class="fa fa-toggle-off" aria-hidden="true" style="font-size:24px" ng-show="!todoCtrl.addedSortStatus" ng-click="todoCtrl.addedDecending()"></i> -->
+                  </th>
                   <th class="col-md-2"></th>
                   <th class="col-md-1">
-                    <button ng-show="!todoCtrl.completeFilterStatus" ng-click="todoCtrl.completeFilterStatusButton()">xxx</button>
-                    <button ng-show="todoCtrl.completeFilterStatus" ng-click="todoCtrl.allFilterStatusButton()">ooo</button>
+                    <i class="fa fa-toggle-on" aria-hidden="true" style="font-size:24px" ng-show="!todoCtrl.completeFilterStatus" ng-click="todoCtrl.completeFilterStatusButton()"></i>
+
+                    <i class="fa fa-toggle-off" aria-hidden="true" style="font-size:24px" ng-show="todoCtrl.completeFilterStatus" ng-click="todoCtrl.allFilterStatusButton()"></i>
                   </th>
                   <th class="col-md-1"></th>
                   <th class="col-md-1"></th>
                 </tr>
-                <tr ng-repeat="task in todoCtrl.getFilteredByComplete()" ng-class="{ success: task.completed}">
-                      <td class="col-md-1">{{$index + 1}} |</td>
+                <tr ng-repeat="task in todoCtrl.getFilteredByComplete() | orderBy:todoCtrl.orderProp" ng-class="{ success: task.completed}">
+                      <td class="col-md-1">{{$index + 1}} .</td>
                       <td class="col-md-4">{{task.task}}</td>
                       <td class="col-md-2">{{task.dateAdded | date : mm/dd/yyyy}}
                       </td>
@@ -147,13 +125,11 @@
                           <i class="fa fa-check-square-o" aria-hidden="true" ng-show="task.completed" ng-click="todoCtrl.uncompleteTask(task)"></i>
                       </td>
                       <td class="col-md-1">
-                         <i class="fa fa-pencil-square-o" aria-hidden="true" ng-click="todoCtrl.editTask($index)"></i>
+                         <i class="fa fa-pencil-square-o" aria-hidden="true" ng-click="todoCtrl.editTask(task)"></i>
                       </td>
                       <td class="col-md-1">
-                          <i class="fa fa-trash-o" aria-hidden="true" ng-click="todoCtrl.deleteTask($index)"></i>
+                          <i class="fa fa-trash-o" aria-hidden="true" ng-click="todoCtrl.deleteTask(task)"></i>
                       </td>
-
-                      <!-- <td class="col-md-2"><input type="checkbox" ng-model="todoCtrl.completed" class="form-control"></td> -->
                 </tr>
               </table>
           </div>
@@ -163,14 +139,10 @@
     </div> <!-- End main row -->
 </div> <!-- End Main Container --> 
 
-<pre><div>{{todoCtrl.taskList|json}}</div></pre>
-
-<pre>{{ todoCtrl.object | json }}</pre>
-
 <footer class="page-footer">
   <nav class="navbar navbar-default navbar-fixed-bottom">
       <div class="container">
-          &copy; <a href="https://garyditsch.github.io">Gary Ditsch</a> |
+          &copy; <a href="https://garyditsch.github.io">Gary Ditsch</a>
           | <a href="http://awesomeincu.com/blog">Awesome Inc U. Bootcamp 2016</a>
       </div>
   </nav>
